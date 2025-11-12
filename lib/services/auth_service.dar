@@ -1,0 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+class AuthService {
+  static Future<User?> signIn(String email, String password) async {
+    final creds = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email, password: password
+    );
+    return creds.user;
+  }
+
+  static Future<User?> signUp(String email, String password) async {
+    final creds = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email, password: password
+    );
+    return creds.user;
+  }
+
+  static Future<void> sendPasswordReset(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  static Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<void> deleteAccount() async {
+    await FirebaseAuth.instance.currentUser?.delete();
+  }
+}
